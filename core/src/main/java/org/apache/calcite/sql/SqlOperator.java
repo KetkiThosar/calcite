@@ -31,6 +31,7 @@ import org.apache.calcite.sql.validate.SqlValidator;
 import org.apache.calcite.sql.validate.SqlValidatorImpl;
 import org.apache.calcite.sql.validate.SqlValidatorScope;
 import org.apache.calcite.sql.validate.SqlValidatorUtil;
+import org.apache.calcite.sql.validate.XYZ;
 import org.apache.calcite.util.Litmus;
 import org.apache.calcite.util.Util;
 
@@ -517,7 +518,7 @@ public abstract class SqlOperator {
     // Validate and determine coercibility and resulting collation
     // name of binary operator if needed.
     type = adjustType(validator, call, type);
-    SqlValidatorUtil.checkCharsetAndCollateConsistentIfCharType(type);
+    XYZ.checkCharsetAndCollateConsistentIfCharType(type);
     return type;
   }
 

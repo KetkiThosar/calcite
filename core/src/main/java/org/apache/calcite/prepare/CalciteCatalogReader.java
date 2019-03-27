@@ -60,6 +60,7 @@ import org.apache.calcite.sql.validate.SqlUserDefinedFunction;
 import org.apache.calcite.sql.validate.SqlUserDefinedTableFunction;
 import org.apache.calcite.sql.validate.SqlUserDefinedTableMacro;
 import org.apache.calcite.sql.validate.SqlValidatorUtil;
+import org.apache.calcite.sql.validate.XYZ;
 import org.apache.calcite.util.Optionality;
 import org.apache.calcite.util.Util;
 
@@ -239,7 +240,7 @@ public class CalciteCatalogReader implements Prepare.CatalogReader {
 
   public RelDataType createTypeFromProjection(final RelDataType type,
       final List<String> columnNameList) {
-    return SqlValidatorUtil.createTypeFromProjection(type, columnNameList,
+    return XYZ.createTypeFromProjection(type, columnNameList,
         typeFactory, nameMatcher.isCaseSensitive());
   }
 

@@ -27,6 +27,7 @@ import org.apache.calcite.rel.metadata.RelMetadataQuery;
 import org.apache.calcite.rel.type.RelDataType;
 import org.apache.calcite.rex.RexNode;
 import org.apache.calcite.sql.validate.SqlValidatorUtil;
+import org.apache.calcite.sql.validate.XYZ;
 import org.apache.calcite.util.ImmutableIntList;
 import org.apache.calcite.util.Util;
 
@@ -114,7 +115,7 @@ public class SemiJoin extends EquiJoin {
    * input only.
    */
   @Override public RelDataType deriveRowType() {
-    return SqlValidatorUtil.deriveJoinRowType(
+    return XYZ.deriveJoinRowType(
         left.getRowType(),
         null,
         JoinRelType.INNER,

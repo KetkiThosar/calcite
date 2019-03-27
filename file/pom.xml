@@ -95,7 +95,7 @@ limitations under the License.
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-dependency-plugin</artifactId>
-        <version>${maven-dependency-plugin.version}</version>
+        <version>${maven-dependency-plugin.version}</version><!--$NO-MVN-MAN-VER$-->
         <executions>
           <execution>
             <id>copy-dependencies</id>

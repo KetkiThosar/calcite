@@ -32,6 +32,7 @@ import org.apache.calcite.rex.RexNode;
 import org.apache.calcite.rex.RexProgram;
 import org.apache.calcite.rex.RexProgramBuilder;
 import org.apache.calcite.sql.validate.SqlValidatorUtil;
+import org.apache.calcite.sql.validate.XYZ;
 import org.apache.calcite.tools.RelBuilder;
 import org.apache.calcite.tools.RelBuilderFactory;
 import org.apache.calcite.util.ImmutableIntList;
@@ -125,7 +126,7 @@ public class SemiJoinProjectTransposeRule extends RelOptRule {
     // for the bottom RexProgram, the input is a concatenation of the
     // child of the project and the RHS of the semijoin
     RelDataType bottomInputRowType =
-        SqlValidatorUtil.deriveJoinRowType(
+        XYZ.deriveJoinRowType(
             project.getInput().getRowType(),
             rightChild.getRowType(),
             JoinRelType.INNER,
@@ -156,7 +157,7 @@ public class SemiJoinProjectTransposeRule extends RelOptRule {
     // input rowtype into the top program is the concatenation of the
     // project and the RHS of the semijoin
     RelDataType topInputRowType =
-        SqlValidatorUtil.deriveJoinRowType(
+        XYZ.deriveJoinRowType(
             project.getRowType(),
             rightChild.getRowType(),
             JoinRelType.INNER,

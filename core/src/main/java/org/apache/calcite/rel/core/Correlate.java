@@ -29,6 +29,7 @@ import org.apache.calcite.rel.metadata.RelMetadataQuery;
 import org.apache.calcite.rel.type.RelDataType;
 import org.apache.calcite.sql.SemiJoinType;
 import org.apache.calcite.sql.validate.SqlValidatorUtil;
+import org.apache.calcite.sql.validate.XYZ;
 import org.apache.calcite.util.ImmutableBitSet;
 import org.apache.calcite.util.Litmus;
 
@@ -140,7 +141,7 @@ public abstract class Correlate extends BiRel {
     switch (joinType) {
     case LEFT:
     case INNER:
-      return SqlValidatorUtil.deriveJoinRowType(left.getRowType(),
+      return XYZ.deriveJoinRowType(left.getRowType(),
           right.getRowType(), joinType.toJoinType(),
           getCluster().getTypeFactory(), null,
           ImmutableList.of());

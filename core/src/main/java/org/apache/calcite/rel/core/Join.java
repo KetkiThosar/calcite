@@ -33,6 +33,7 @@ import org.apache.calcite.rex.RexNode;
 import org.apache.calcite.rex.RexShuttle;
 import org.apache.calcite.sql.type.SqlTypeName;
 import org.apache.calcite.sql.validate.SqlValidatorUtil;
+import org.apache.calcite.sql.validate.XYZ;
 import org.apache.calcite.util.Litmus;
 import org.apache.calcite.util.Util;
 
@@ -212,7 +213,7 @@ public abstract class Join extends BiRel {
   }
 
   @Override protected RelDataType deriveRowType() {
-    return SqlValidatorUtil.deriveJoinRowType(left.getRowType(),
+    return XYZ.deriveJoinRowType(left.getRowType(),
         right.getRowType(), joinType, getCluster().getTypeFactory(), null,
         getSystemFieldList());
   }
@@ -248,7 +249,7 @@ public abstract class Join extends BiRel {
       RelDataTypeFactory typeFactory,
       List<String> fieldNameList,
       List<RelDataTypeField> systemFieldList) {
-    return SqlValidatorUtil.deriveJoinRowType(leftType, rightType, joinType,
+    return XYZ.deriveJoinRowType(leftType, rightType, joinType,
         typeFactory, fieldNameList, systemFieldList);
   }
 
@@ -259,7 +260,7 @@ public abstract class Join extends BiRel {
       RelDataType rightType,
       List<String> fieldNameList,
       List<RelDataTypeField> systemFieldList) {
-    return SqlValidatorUtil.createJoinType(typeFactory, leftType, rightType,
+    return XYZ.createJoinType(typeFactory, leftType, rightType,
         fieldNameList, systemFieldList);
   }
 

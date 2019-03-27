@@ -163,6 +163,7 @@ import org.apache.calcite.sql.validate.SqlValidatorNamespace;
 import org.apache.calcite.sql.validate.SqlValidatorScope;
 import org.apache.calcite.sql.validate.SqlValidatorTable;
 import org.apache.calcite.sql.validate.SqlValidatorUtil;
+import org.apache.calcite.sql.validate.XYZ;
 import org.apache.calcite.tools.RelBuilder;
 import org.apache.calcite.tools.RelBuilderFactory;
 import org.apache.calcite.util.ImmutableBitSet;
@@ -2052,7 +2053,7 @@ public class SqlToRelConverter {
         final RelDataType leftRowType = leftNamespace.getRowType();
         final RelDataType rightRowType = rightNamespace.getRowType();
         final List<String> columnList =
-            SqlValidatorUtil.deriveNaturalJoinColumnList(
+            XYZ.deriveNaturalJoinColumnList(
                 catalogReader.nameMatcher(), leftRowType, rightRowType);
         conditionExp = convertUsing(leftNamespace, rightNamespace, columnList);
       } else {
@@ -3449,7 +3450,7 @@ public class SqlToRelConverter {
       for (int i = 0; i < targetColumnList.size(); i++) {
         SqlIdentifier id = (SqlIdentifier) targetColumnList.get(i);
         RelDataTypeField field =
-            SqlValidatorUtil.getTargetField(
+            XYZ.getTargetField(
                 tableRowType, typeFactory, id, catalogReader, targetTable);
         assert field != null : "column " + id.toString() + " not found";
         targetColumnNames.add(field.getName());
@@ -3515,7 +3516,7 @@ public class SqlToRelConverter {
     for (SqlNode node : call.getTargetColumnList()) {
       SqlIdentifier id = (SqlIdentifier) node;
       RelDataTypeField field =
-          SqlValidatorUtil.getTargetField(
+          XYZ.getTargetField(
               targetRowType, typeFactory, id, catalogReader, targetTable);
       assert field != null : "column " + id.toString() + " not found";
       targetColumnNameList.add(field.getName());
@@ -3539,7 +3540,7 @@ public class SqlToRelConverter {
       for (SqlNode targetColumn : updateCall.getTargetColumnList()) {
         SqlIdentifier id = (SqlIdentifier) targetColumn;
         RelDataTypeField field =
-            SqlValidatorUtil.getTargetField(
+            XYZ.getTargetField(
                 targetRowType, typeFactory, id, catalogReader, targetTable);
         assert field != null : "column " + id.toString() + " not found";
         targetColumnNameList.add(field.getName());
