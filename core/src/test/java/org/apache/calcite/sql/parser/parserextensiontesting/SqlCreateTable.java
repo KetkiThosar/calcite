@@ -20,11 +20,13 @@ import org.apache.calcite.adapter.java.JavaTypeFactory;
 import org.apache.calcite.jdbc.CalcitePrepare;
 import org.apache.calcite.jdbc.CalciteSchema;
 import org.apache.calcite.jdbc.JavaTypeFactoryImpl;
+import org.apache.calcite.linq4j.Enumerable;
 import org.apache.calcite.linq4j.Enumerator;
 import org.apache.calcite.linq4j.Linq4j;
 import org.apache.calcite.linq4j.QueryProvider;
 import org.apache.calcite.linq4j.Queryable;
 import org.apache.calcite.linq4j.tree.Expression;
+import org.apache.calcite.linq4j.tree.FunctionExpression;
 import org.apache.calcite.rel.type.RelDataType;
 import org.apache.calcite.rel.type.RelDataTypeFactory;
 import org.apache.calcite.rel.type.RelDataTypeImpl;
@@ -143,6 +145,12 @@ public class SqlCreateTable extends SqlCreate
           //noinspection unchecked
           return (Enumerator<T>) Linq4j.enumerator(list);
         }
+
+		@Override
+		public Queryable<T> where(FunctionExpression functionExpression) {
+			// TODO Auto-generated method stub
+			return null;
+		}
       };
     }
 

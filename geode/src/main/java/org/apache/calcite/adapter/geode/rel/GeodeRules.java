@@ -37,6 +37,7 @@ import org.apache.calcite.rex.RexVisitorImpl;
 import org.apache.calcite.sql.SqlKind;
 import org.apache.calcite.sql.fun.SqlStdOperatorTable;
 import org.apache.calcite.sql.type.SqlTypeName;
+import org.apache.calcite.sql.validate.NameUtils;
 import org.apache.calcite.sql.validate.SqlValidatorUtil;
 
 import java.util.AbstractList;
@@ -91,7 +92,7 @@ public class GeodeRules {
       }
     };
 
-    return SqlValidatorUtil.uniquify(fieldNames, true);
+    return NameUtils.uniquify(fieldNames, true);
   }
 
   /**

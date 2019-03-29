@@ -27,6 +27,7 @@ import org.apache.calcite.rel.type.RelDataType;
 import org.apache.calcite.rex.RexNode;
 import org.apache.calcite.rex.RexUtil;
 import org.apache.calcite.sql.validate.SqlValidatorUtil;
+import org.apache.calcite.sql.validate.Suggester;
 import org.apache.calcite.util.Util;
 
 import java.util.List;
@@ -81,7 +82,7 @@ public class EnumerableProject extends Project implements EnumerableRel {
     final RelOptCluster cluster = child.getCluster();
     final RelDataType rowType =
         RexUtil.createStructType(cluster.getTypeFactory(), projects,
-          fieldNames, SqlValidatorUtil.F_SUGGESTER);
+          fieldNames, Suggester.F_SUGGESTER);
     return create(child, projects, rowType);
   }
 

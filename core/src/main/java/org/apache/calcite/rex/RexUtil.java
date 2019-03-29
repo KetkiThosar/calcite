@@ -38,6 +38,7 @@ import org.apache.calcite.sql.fun.SqlStdOperatorTable;
 import org.apache.calcite.sql.type.SqlTypeFamily;
 import org.apache.calcite.sql.type.SqlTypeName;
 import org.apache.calcite.sql.type.SqlTypeUtil;
+import org.apache.calcite.sql.validate.NameUtils;
 import org.apache.calcite.sql.validate.SqlValidatorUtil;
 import org.apache.calcite.util.ControlFlowException;
 import org.apache.calcite.util.Litmus;
@@ -908,7 +909,7 @@ public class RexUtil {
       List<String> names,
       SqlValidatorUtil.Suggester suggester) {
     if (names != null && suggester != null) {
-      names = SqlValidatorUtil.uniquify(names, suggester,
+      names = NameUtils.uniquify(names, suggester,
           typeFactory.getTypeSystem().isSchemaCaseSensitive());
     }
     final RelDataTypeFactory.Builder builder = typeFactory.builder();

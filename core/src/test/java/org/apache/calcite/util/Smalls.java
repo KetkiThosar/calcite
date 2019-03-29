@@ -29,6 +29,7 @@ import org.apache.calcite.linq4j.Queryable;
 import org.apache.calcite.linq4j.function.Deterministic;
 import org.apache.calcite.linq4j.function.Parameter;
 import org.apache.calcite.linq4j.function.SemiStrict;
+import org.apache.calcite.linq4j.tree.FunctionExpression;
 import org.apache.calcite.linq4j.tree.Types;
 import org.apache.calcite.rel.type.RelDataType;
 import org.apache.calcite.rel.type.RelDataTypeFactory;
@@ -262,6 +263,12 @@ public class Smalls {
               }
             };
           }
+
+		@Override
+		public Enumerable<Object[]> where(FunctionExpression functionExpression) {
+			// TODO Auto-generated method stub
+			return null;
+		}
         };
       }
 

@@ -21,6 +21,7 @@ import org.apache.calcite.sql.SqlCollation;
 import org.apache.calcite.sql.SqlIntervalQualifier;
 import org.apache.calcite.sql.parser.SqlParserPos;
 import org.apache.calcite.sql.type.SqlTypeName;
+import org.apache.calcite.sql.validate.NameUtils;
 import org.apache.calcite.sql.validate.SqlValidatorUtil;
 
 import java.nio.charset.Charset;
@@ -532,7 +533,7 @@ public interface RelDataTypeFactory {
      * Makes sure that field names are unique.
      */
     public Builder uniquify() {
-      final List<String> uniqueNames = SqlValidatorUtil.uniquify(names,
+      final List<String> uniqueNames = NameUtils.uniquify(names,
           typeFactory.getTypeSystem().isSchemaCaseSensitive());
       if (uniqueNames != names) {
         names.clear();

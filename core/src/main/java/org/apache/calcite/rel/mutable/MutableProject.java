@@ -21,6 +21,7 @@ import org.apache.calcite.rel.type.RelDataType;
 import org.apache.calcite.rex.RexNode;
 import org.apache.calcite.rex.RexUtil;
 import org.apache.calcite.sql.validate.SqlValidatorUtil;
+import org.apache.calcite.sql.validate.Suggester;
 import org.apache.calcite.util.Litmus;
 import org.apache.calcite.util.Pair;
 import org.apache.calcite.util.mapping.Mappings;
@@ -62,7 +63,7 @@ public class MutableProject extends MutableSingleRel {
       List<String> fieldNameList) {
     final RelDataType rowType =
         RexUtil.createStructType(input.cluster.getTypeFactory(), exprList,
-            fieldNameList, SqlValidatorUtil.F_SUGGESTER);
+            fieldNameList, Suggester.F_SUGGESTER);
     return of(rowType, input, exprList);
   }
 

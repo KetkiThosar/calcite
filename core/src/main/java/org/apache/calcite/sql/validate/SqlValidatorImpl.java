@@ -1351,7 +1351,7 @@ public class SqlValidatorImpl implements SqlValidatorWithHints {
     SqlNode targetTable = call.getTargetTable();
     if (call.getAlias() != null) {
       targetTable =
-          SqlValidatorUtil.addAlias(
+    		  NameUtils.addAlias(
               targetTable,
               call.getAlias().getSimple());
     }
@@ -1453,13 +1453,13 @@ public class SqlValidatorImpl implements SqlValidatorWithHints {
               field.getName(),
               SqlParserPos.ZERO);
       selectList.add(
-          SqlValidatorUtil.addAlias(col, UPDATE_ANON_PREFIX + i));
+    		  NameUtils.addAlias(col, UPDATE_ANON_PREFIX + i));
       ++i;
     }
     source =
         new SqlSelect(SqlParserPos.ZERO, null, selectList, source, null, null,
             null, null, null, null, null);
-    source = SqlValidatorUtil.addAlias(source, UPDATE_SRC_ALIAS);
+    source = NameUtils.addAlias(source, UPDATE_SRC_ALIAS);
     SqlMerge mergeCall =
         new SqlMerge(updateCall.getParserPosition(), target, condition, source,
             updateCall, null, null, updateCall.getAlias());
@@ -1502,13 +1502,13 @@ public class SqlValidatorImpl implements SqlValidatorWithHints {
       // Force unique aliases to avoid a duplicate for Y with
       // SET X=Y
       String alias = SqlUtil.deriveAliasFromOrdinal(ordinal);
-      selectList.add(SqlValidatorUtil.addAlias(exp, alias));
+      selectList.add(NameUtils.addAlias(exp, alias));
       ++ordinal;
     }
     SqlNode sourceTable = call.getTargetTable();
     if (call.getAlias() != null) {
       sourceTable =
-          SqlValidatorUtil.addAlias(
+    		  NameUtils.addAlias(
               sourceTable,
               call.getAlias().getSimple());
     }
@@ -1529,7 +1529,7 @@ public class SqlValidatorImpl implements SqlValidatorWithHints {
     SqlNode sourceTable = call.getTargetTable();
     if (call.getAlias() != null) {
       sourceTable =
-          SqlValidatorUtil.addAlias(
+    		  NameUtils.addAlias(
               sourceTable,
               call.getAlias().getSimple());
     }
@@ -1853,12 +1853,12 @@ public class SqlValidatorImpl implements SqlValidatorWithHints {
       SqlNode exp,
       SqlValidatorScope scope,
       final boolean includeSystemVars) {
-    String alias = SqlValidatorUtil.getAlias(exp, -1);
+    String alias = NameUtils.getAlias(exp, -1);
     String uniqueAlias =
-        SqlValidatorUtil.uniquify(
-            alias, aliases, SqlValidatorUtil.EXPR_SUGGESTER);
+    		NameUtils.uniquify(
+            alias, aliases, Suggester.EXPR_SUGGESTER);
     if (!alias.equals(uniqueAlias)) {
-      exp = SqlValidatorUtil.addAlias(exp, uniqueAlias);
+      exp = NameUtils.addAlias(exp, uniqueAlias);
     }
     fieldList.add(Pair.of(uniqueAlias, deriveType(scope, exp)));
     list.add(exp);
@@ -1867,7 +1867,7 @@ public class SqlValidatorImpl implements SqlValidatorWithHints {
   public String deriveAlias(
       SqlNode node,
       int ordinal) {
-    return SqlValidatorUtil.getAlias(node, ordinal);
+    return NameUtils.getAlias(node, ordinal);
   }
 
   // implement SqlValidator
@@ -2017,7 +2017,7 @@ public class SqlValidatorImpl implements SqlValidatorWithHints {
           alias = deriveAlias(node, nextGeneratedId++);
         }
         if (shouldExpandIdentifiers()) {
-          newNode = SqlValidatorUtil.addAlias(node, alias);
+          newNode = NameUtils.addAlias(node, alias);
         }
         break;
 
@@ -2039,7 +2039,7 @@ public class SqlValidatorImpl implements SqlValidatorWithHints {
           // aliases explicit too, otherwise the expanded query
           // will not be consistent if we convert back to SQL, e.g.
           // "select EXPR$1.EXPR$2 from values (1)".
-          newNode = SqlValidatorUtil.addAlias(node, alias);
+          newNode = NameUtils.addAlias(node, alias);
         }
         break;
       }
@@ -3795,7 +3795,7 @@ public class SqlValidatorImpl implements SqlValidatorWithHints {
         throw newValidationError(withItem.columnList,
             RESOURCE.columnCountMismatch());
       }
-      SqlValidatorUtil.checkIdentifierListForDuplicates(
+      ColumnUtils.checkIdentifierListForDuplicates(
           withItem.columnList.getList(), validationErrorFunction);
     } else {
       // Luckily, field names have not been make unique yet.
@@ -5889,7 +5889,7 @@ public class SqlValidatorImpl implements SqlValidatorWithHints {
             validator.catalogReader.nameMatcher();
         int n = 0;
         for (SqlNode s : select.getSelectList()) {
-          final String alias = SqlValidatorUtil.getAlias(s, -1);
+          final String alias = NameUtils.getAlias(s, -1);
           if (alias != null && nameMatcher.matches(alias, name)) {
             expr = s;
             n++;

@@ -40,6 +40,7 @@ import org.apache.calcite.rex.RexVisitorImpl;
 import org.apache.calcite.sql.SqlKind;
 import org.apache.calcite.sql.fun.SqlStdOperatorTable;
 import org.apache.calcite.sql.type.SqlTypeName;
+import org.apache.calcite.sql.validate.NameUtils;
 import org.apache.calcite.sql.validate.SqlValidatorUtil;
 
 import java.util.AbstractList;
@@ -92,7 +93,7 @@ class ElasticsearchRules {
   }
 
   static List<String> elasticsearchFieldNames(final RelDataType rowType) {
-    return SqlValidatorUtil.uniquify(
+    return NameUtils.uniquify(
         new AbstractList<String>() {
           @Override public String get(int index) {
             final String name = rowType.getFieldList().get(index).getName();

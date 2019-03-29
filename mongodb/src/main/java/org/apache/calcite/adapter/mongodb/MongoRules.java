@@ -41,6 +41,7 @@ import org.apache.calcite.sql.SqlKind;
 import org.apache.calcite.sql.SqlOperator;
 import org.apache.calcite.sql.fun.SqlStdOperatorTable;
 import org.apache.calcite.sql.type.SqlTypeName;
+import org.apache.calcite.sql.validate.NameUtils;
 import org.apache.calcite.sql.validate.SqlValidatorUtil;
 import org.apache.calcite.util.Bug;
 import org.apache.calcite.util.Util;
@@ -88,7 +89,7 @@ public class MongoRules {
   }
 
   static List<String> mongoFieldNames(final RelDataType rowType) {
-    return SqlValidatorUtil.uniquify(
+    return NameUtils.uniquify(
         new AbstractList<String>() {
           @Override public String get(int index) {
             final String name = rowType.getFieldList().get(index).getName();

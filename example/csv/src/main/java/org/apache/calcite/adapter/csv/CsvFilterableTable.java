@@ -20,6 +20,7 @@ import org.apache.calcite.DataContext;
 import org.apache.calcite.linq4j.AbstractEnumerable;
 import org.apache.calcite.linq4j.Enumerable;
 import org.apache.calcite.linq4j.Enumerator;
+import org.apache.calcite.linq4j.tree.FunctionExpression;
 import org.apache.calcite.rel.type.RelProtoDataType;
 import org.apache.calcite.rex.RexCall;
 import org.apache.calcite.rex.RexInputRef;
@@ -59,6 +60,12 @@ public class CsvFilterableTable extends CsvTable
         return new CsvEnumerator<>(source, cancelFlag, false, filterValues,
             new CsvEnumerator.ArrayRowConverter(fieldTypes, fields));
       }
+
+	@Override
+	public Enumerable<Object[]> where(FunctionExpression functionExpression) {
+		// TODO Auto-generated method stub
+		return null;
+	}
     };
   }
 

@@ -76,46 +76,46 @@ public class SqlValidatorUtilTest {
 
   @Test public void testUniquifyCaseSensitive() {
     List<String> nameList = Lists.newArrayList("col1", "COL1", "col_ABC", "col_abC");
-    List<String> resultList = SqlValidatorUtil.uniquify(
-        nameList, SqlValidatorUtil.EXPR_SUGGESTER, true);
+    List<String> resultList = NameUtils.uniquify(
+        nameList, Suggester.EXPR_SUGGESTER, true);
     assertThat(nameList, sameInstance(resultList));
   }
 
   @Test public void testUniquifyNotCaseSensitive() {
     List<String> nameList = Lists.newArrayList("col1", "COL1", "col_ABC", "col_abC");
-    List<String> resultList = SqlValidatorUtil.uniquify(
-        nameList, SqlValidatorUtil.EXPR_SUGGESTER, false);
+    List<String> resultList = NameUtils.uniquify(
+        nameList, Suggester.EXPR_SUGGESTER, false);
     assertThat(resultList, not(nameList));
     checkChangedFieldList(nameList, resultList, false);
   }
 
   @Test public void testUniquifyOrderingCaseSensitive() {
     List<String> nameList = Lists.newArrayList("k68s", "def", "col1", "COL1", "abc", "123");
-    List<String> resultList = SqlValidatorUtil.uniquify(
-        nameList, SqlValidatorUtil.EXPR_SUGGESTER, true);
+    List<String> resultList = NameUtils.uniquify(
+        nameList, Suggester.EXPR_SUGGESTER, true);
     assertThat(nameList, sameInstance(resultList));
   }
 
   @Test public void testUniquifyOrderingRepeatedCaseSensitive() {
     List<String> nameList = Lists.newArrayList("k68s", "def", "col1", "COL1", "def", "123");
-    List<String> resultList = SqlValidatorUtil.uniquify(
-        nameList, SqlValidatorUtil.EXPR_SUGGESTER, true);
+    List<String> resultList = NameUtils.uniquify(
+        nameList, Suggester.EXPR_SUGGESTER, true);
     assertThat(nameList, not(resultList));
     checkChangedFieldList(nameList, resultList, true);
   }
 
   @Test public void testUniquifyOrderingNotCaseSensitive() {
     List<String> nameList = Lists.newArrayList("k68s", "def", "col1", "COL1", "abc", "123");
-    List<String> resultList = SqlValidatorUtil.uniquify(
-        nameList, SqlValidatorUtil.EXPR_SUGGESTER, false);
+    List<String> resultList = NameUtils.uniquify(
+        nameList, Suggester.EXPR_SUGGESTER, false);
     assertThat(resultList, not(nameList));
     checkChangedFieldList(nameList, resultList, false);
   }
 
   @Test public void testUniquifyOrderingRepeatedNotCaseSensitive() {
     List<String> nameList = Lists.newArrayList("k68s", "def", "col1", "COL1", "def", "123");
-    List<String> resultList = SqlValidatorUtil.uniquify(
-        nameList, SqlValidatorUtil.EXPR_SUGGESTER, false);
+    List<String> resultList = NameUtils.uniquify(
+        nameList, Suggester.EXPR_SUGGESTER, false);
     assertThat(resultList, not(nameList));
     checkChangedFieldList(nameList, resultList, false);
   }
@@ -130,7 +130,7 @@ public class SqlValidatorUtilTest {
     final SqlValidatorImpl validator =
         (SqlValidatorImpl) tester.getValidator();
     try {
-      SqlValidatorUtil.checkIdentifierListForDuplicates(newList,
+      ColumnUtils.checkIdentifierListForDuplicates(newList,
           validator.getValidationErrorFunction());
       fail("expected exception");
     } catch (CalciteContextException e) {
@@ -138,7 +138,7 @@ public class SqlValidatorUtilTest {
     }
     // should not throw
     newList.set(1, new SqlIdentifier(Arrays.asList("f0", "c1"), SqlParserPos.ZERO));
-    SqlValidatorUtil.checkIdentifierListForDuplicates(newList, null);
+    NameUtils.checkIdentifierListForDuplicates(newList, null);
   }
 
   @Test public void testNameMatcher() {

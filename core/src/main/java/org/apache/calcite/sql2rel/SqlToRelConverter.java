@@ -147,9 +147,11 @@ import org.apache.calcite.sql.util.SqlBasicVisitor;
 import org.apache.calcite.sql.util.SqlVisitor;
 import org.apache.calcite.sql.validate.AggregatingSelectScope;
 import org.apache.calcite.sql.validate.CollectNamespace;
+import org.apache.calcite.sql.validate.ColumnUtils;
 import org.apache.calcite.sql.validate.DelegatingScope;
 import org.apache.calcite.sql.validate.ListScope;
 import org.apache.calcite.sql.validate.MatchRecognizeScope;
+import org.apache.calcite.sql.validate.NameUtils;
 import org.apache.calcite.sql.validate.ParameterScope;
 import org.apache.calcite.sql.validate.ScopeUtil;
 import org.apache.calcite.sql.validate.SelectScope;
@@ -440,7 +442,7 @@ public class SqlToRelConverter {
     final RelDataType validatedRowType =
         validator.getTypeFactory().createStructType(
             Pair.right(validatedFields),
-            SqlValidatorUtil.uniquify(Pair.left(validatedFields),
+            NameUtils.uniquify(Pair.left(validatedFields),
                 catalogReader.nameMatcher().isCaseSensitive()));
 
     final List<RelDataTypeField> convertedFields =
@@ -2309,7 +2311,7 @@ public class SqlToRelConverter {
       final SqlValidatorTable validatorTable =
           table.unwrap(SqlValidatorTable.class);
       final List<RelDataTypeField> extendedFields =
-          SqlValidatorUtil.getExtendedColumns(validator.getTypeFactory(), validatorTable,
+    		  ColumnUtils.getExtendedColumns(validator.getTypeFactory(), validatorTable,
               extendedColumns);
       table = table.extend(extendedFields);
     }
@@ -3867,7 +3869,7 @@ public class SqlToRelConverter {
       fieldNames.add(deriveAlias(expr, aliases, i));
     }
 
-    fieldNames = SqlValidatorUtil.uniquify(fieldNames,
+    fieldNames = NameUtils.uniquify(fieldNames,
         catalogReader.nameMatcher().isCaseSensitive());
 
     relBuilder.push(bb.root)

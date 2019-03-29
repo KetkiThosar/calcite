@@ -384,7 +384,7 @@ public abstract class DelegatingScope implements SqlValidatorScope {
       if (fromNs.getEnclosingNode() != null
           && !(this instanceof MatchRecognizeScope)) {
         String alias =
-            SqlValidatorUtil.getAlias(fromNs.getEnclosingNode(), -1);
+        		NameUtils.getAlias(fromNs.getEnclosingNode(), -1);
         if (alias != null
             && i > 0
             && !alias.equals(identifier.names.get(i - 1))) {

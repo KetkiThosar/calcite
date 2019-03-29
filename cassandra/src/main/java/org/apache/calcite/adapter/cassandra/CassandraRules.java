@@ -39,7 +39,9 @@ import org.apache.calcite.rex.RexInputRef;
 import org.apache.calcite.rex.RexNode;
 import org.apache.calcite.rex.RexVisitorImpl;
 import org.apache.calcite.sql.SqlKind;
+import org.apache.calcite.sql.validate.NameUtils;
 import org.apache.calcite.sql.validate.SqlValidatorUtil;
+import org.apache.calcite.sql.validate.Suggester;
 import org.apache.calcite.util.Pair;
 
 import java.util.HashSet;
@@ -63,8 +65,8 @@ public class CassandraRules {
   };
 
   static List<String> cassandraFieldNames(final RelDataType rowType) {
-    return SqlValidatorUtil.uniquify(rowType.getFieldNames(),
-        SqlValidatorUtil.EXPR_SUGGESTER, true);
+    return NameUtils.uniquify(rowType.getFieldNames(),
+    		Suggester.EXPR_SUGGESTER, true);
   }
 
   /** Translator from {@link RexNode} to strings in Cassandra's expression

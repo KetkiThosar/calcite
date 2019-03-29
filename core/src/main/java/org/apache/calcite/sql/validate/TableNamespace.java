@@ -87,13 +87,13 @@ class TableNamespace extends AbstractNamespace {
    * rarely used fields in the underlying HBase table. */
   public TableNamespace extend(SqlNodeList extendList) {
     final List<SqlNode> identifierList = Util.quotientList(extendList.getList(), 2, 0);
-    SqlValidatorUtil.checkIdentifierListForDuplicates(
+    ColumnUtils.checkIdentifierListForDuplicates(
         identifierList, validator.getValidationErrorFunction());
     final ImmutableList.Builder<RelDataTypeField> builder =
         ImmutableList.builder();
     builder.addAll(this.extendedFields);
     builder.addAll(
-        SqlValidatorUtil.getExtendedColumns(validator.getTypeFactory(),
+    		ColumnUtils.getExtendedColumns(validator.getTypeFactory(),
             getTable(), extendList));
     final List<RelDataTypeField> extendedFields = builder.build();
     final Table schemaTable = table.unwrap(Table.class);
@@ -132,7 +132,7 @@ class TableNamespace extends AbstractNamespace {
    */
   private void checkExtendedColumnTypes(SqlNodeList extendList) {
     final List<RelDataTypeField> extendedFields =
-        SqlValidatorUtil.getExtendedColumns(
+    		ColumnUtils.getExtendedColumns(
             validator.getTypeFactory(), table, extendList);
     final List<RelDataTypeField> baseFields =
         getBaseRowType().getFieldList();

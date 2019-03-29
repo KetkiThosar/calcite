@@ -32,6 +32,7 @@ import org.apache.calcite.linq4j.Enumerator;
 import org.apache.calcite.linq4j.tree.ClassDeclaration;
 import org.apache.calcite.linq4j.tree.Expressions;
 import org.apache.calcite.linq4j.tree.FieldDeclaration;
+import org.apache.calcite.linq4j.tree.FunctionExpression;
 import org.apache.calcite.linq4j.tree.VisitorImpl;
 import org.apache.calcite.plan.ConventionTraitDef;
 import org.apache.calcite.plan.RelOptCluster;
@@ -208,6 +209,12 @@ public class EnumerableInterpretable extends ConverterImpl
               }
             };
           }
+
+		@Override
+		public Enumerable<Object[]> where(FunctionExpression functionExpression) {
+			// TODO Auto-generated method stub
+			return null;
+		}
         };
       }
     };

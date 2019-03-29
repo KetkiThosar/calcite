@@ -66,6 +66,7 @@ import org.apache.calcite.sql.fun.SqlSumEmptyIsZeroAggFunction;
 import org.apache.calcite.sql.parser.SqlParserPos;
 import org.apache.calcite.sql.type.SqlTypeFamily;
 import org.apache.calcite.sql.type.SqlTypeName;
+import org.apache.calcite.sql.validate.NameUtils;
 import org.apache.calcite.sql.validate.SqlValidatorUtil;
 import org.apache.calcite.util.DateString;
 import org.apache.calcite.util.TimeString;
@@ -117,7 +118,7 @@ public abstract class SqlImplementor {
   public void addSelect(List<SqlNode> selectList, SqlNode node,
       RelDataType rowType) {
     String name = rowType.getFieldNames().get(selectList.size());
-    String alias = SqlValidatorUtil.getAlias(node, -1);
+    String alias = NameUtils.getAlias(node, -1);
     if (alias == null || !alias.equals(name)) {
       node = SqlStdOperatorTable.AS.createCall(
           POS, node, new SqlIdentifier(name, POS));
@@ -349,10 +350,10 @@ public abstract class SqlImplementor {
         || aliases instanceof LinkedHashMap
         || aliases instanceof ImmutableMap
         : "must use a Map implementation that preserves order";
-    final String alias2 = SqlValidatorUtil.getAlias(node, -1);
+    final String alias2 = NameUtils.getAlias(node, -1);
     final String alias3 = alias2 != null ? alias2 : "t";
     final String alias4 =
-        SqlValidatorUtil.uniquify(
+    		NameUtils.uniquify(
             alias3, aliasSet, SqlValidatorUtil.EXPR_SUGGESTER);
     if (aliases != null
         && !aliases.isEmpty()
@@ -391,7 +392,7 @@ public abstract class SqlImplementor {
       collectAliases(builder, join.getLeft(),  aliases);
       collectAliases(builder, join.getRight(), aliases);
     } else {
-      final String alias = SqlValidatorUtil.getAlias(node, -1);
+      final String alias = NameUtils.getAlias(node, -1);
       assert alias != null;
       builder.put(alias, aliases.next());
     }

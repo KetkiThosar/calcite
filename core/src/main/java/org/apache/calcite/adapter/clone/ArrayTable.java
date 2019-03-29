@@ -24,6 +24,7 @@ import org.apache.calcite.linq4j.Enumerator;
 import org.apache.calcite.linq4j.Ord;
 import org.apache.calcite.linq4j.QueryProvider;
 import org.apache.calcite.linq4j.Queryable;
+import org.apache.calcite.linq4j.tree.FunctionExpression;
 import org.apache.calcite.linq4j.tree.Primitive;
 import org.apache.calcite.rel.RelCollation;
 import org.apache.calcite.rel.RelCollations;
@@ -88,6 +89,12 @@ class ArrayTable extends AbstractQueryableTable implements ScannableTable {
         final Content content = supplier.get();
         return content.arrayEnumerator();
       }
+
+	@Override
+	public Enumerable<Object[]> where(FunctionExpression functionExpression) {
+		// TODO Auto-generated method stub
+		return null;
+	}
     };
   }
 
@@ -100,6 +107,12 @@ class ArrayTable extends AbstractQueryableTable implements ScannableTable {
         final Content content = supplier.get();
         return content.enumerator();
       }
+
+	@Override
+	public Queryable<T> where(FunctionExpression functionExpression) {
+		// TODO Auto-generated method stub
+		return null;
+	}
     };
   }
 

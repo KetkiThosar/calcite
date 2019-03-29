@@ -59,6 +59,7 @@ import org.apache.calcite.sql.SqlOperator;
 import org.apache.calcite.sql.fun.SqlStdOperatorTable;
 import org.apache.calcite.sql.type.SqlTypeFamily;
 import org.apache.calcite.sql.type.SqlTypeName;
+import org.apache.calcite.sql.validate.NameUtils;
 import org.apache.calcite.sql.validate.SqlValidatorUtil;
 import org.apache.calcite.util.ImmutableBitSet;
 import org.apache.calcite.util.Litmus;
@@ -768,7 +769,7 @@ public class DruidQuery extends AbstractRelNode implements BindableRel {
         if (expression == null) {
           return null;
         }
-        final String virColName = SqlValidatorUtil.uniquify("vc",
+        final String virColName = NameUtils.uniquify("vc",
             usedFieldNames, SqlValidatorUtil.EXPR_SUGGESTER);
         virtualColumnsBuilder.add(VirtualColumn.builder()
             .withName(virColName)
@@ -780,7 +781,7 @@ public class DruidQuery extends AbstractRelNode implements BindableRel {
       } else {
         // simple inputRef or extractable function
         if (usedFieldNames.contains(druidColumn.left)) {
-          final String virColName = SqlValidatorUtil.uniquify("vc",
+          final String virColName = NameUtils.uniquify("vc",
               usedFieldNames, SqlValidatorUtil.EXPR_SUGGESTER);
           virtualColumnsBuilder.add(VirtualColumn.builder()
               .withName(virColName)
@@ -854,7 +855,7 @@ public class DruidQuery extends AbstractRelNode implements BindableRel {
         } else {
           columnPrefix = "extract";
         }
-        final String uniqueExtractColumnName = SqlValidatorUtil
+        final String uniqueExtractColumnName = NameUtils
             .uniquify(columnPrefix, usedFieldNames,
                 SqlValidatorUtil.EXPR_SUGGESTER);
         dimensionSpec = new ExtractionDimensionSpec(druidColumn.left,
@@ -867,7 +868,7 @@ public class DruidQuery extends AbstractRelNode implements BindableRel {
         if (Strings.isNullOrEmpty(expression)) {
           return null;
         }
-        final String name = SqlValidatorUtil
+        final String name = NameUtils
             .uniquify("vc", usedFieldNames,
                 SqlValidatorUtil.EXPR_SUGGESTER);
         VirtualColumn vc = new VirtualColumn(name, expression,
@@ -1058,7 +1059,7 @@ public class DruidQuery extends AbstractRelNode implements BindableRel {
           // simple input ref or Druid runtime identity cast will skip it, since it is here already
           postProjectDimListBuilder.add(existingFieldName);
         } else {
-          final String uniquelyProjectFieldName = SqlValidatorUtil.uniquify(pair.right,
+          final String uniquelyProjectFieldName = NameUtils.uniquify(pair.right,
               existingAggFieldsNames, SqlValidatorUtil.EXPR_SUGGESTER);
           postAggs.add(new JsonExpressionPostAgg(uniquelyProjectFieldName, expression, null));
           postProjectDimListBuilder.add(uniquelyProjectFieldName);

@@ -18,11 +18,13 @@ package org.apache.calcite.adapter.clone;
 
 import org.apache.calcite.adapter.java.AbstractQueryableTable;
 import org.apache.calcite.linq4j.AbstractQueryable;
+import org.apache.calcite.linq4j.Enumerable;
 import org.apache.calcite.linq4j.Enumerator;
 import org.apache.calcite.linq4j.Linq4j;
 import org.apache.calcite.linq4j.QueryProvider;
 import org.apache.calcite.linq4j.Queryable;
 import org.apache.calcite.linq4j.tree.Expression;
+import org.apache.calcite.linq4j.tree.FunctionExpression;
 import org.apache.calcite.rel.type.RelDataType;
 import org.apache.calcite.rel.type.RelDataTypeFactory;
 import org.apache.calcite.rel.type.RelProtoDataType;
@@ -90,6 +92,12 @@ class ListTable extends AbstractQueryableTable {
         //noinspection unchecked
         return Linq4j.enumerator(list);
       }
+
+	@Override
+	public Queryable<T> where(FunctionExpression functionExpression) {
+		// TODO Auto-generated method stub
+		return null;
+	}
     };
   }
 }

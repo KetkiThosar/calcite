@@ -74,6 +74,7 @@ import org.apache.calcite.sql.SqlOperator;
 import org.apache.calcite.sql.fun.SqlStdOperatorTable;
 import org.apache.calcite.sql.type.SqlTypeName;
 import org.apache.calcite.sql.validate.SqlValidatorUtil;
+import org.apache.calcite.sql.validate.Suggester;
 import org.apache.calcite.util.Holder;
 import org.apache.calcite.util.ImmutableBitSet;
 import org.apache.calcite.util.ImmutableIntList;
@@ -1233,7 +1234,7 @@ public class RelBuilder {
           j = i;
         }
         do {
-          name = SqlValidatorUtil.F_SUGGESTER.apply(originalName, j, j++);
+          name = Suggester.F_SUGGESTER.apply(originalName, j, j++);
         } while (uniqueNameList.contains(name));
         fieldNameList.set(i, name);
       }
@@ -1308,7 +1309,7 @@ public class RelBuilder {
     final RelNode input = peek();
     final RelDataType rowType =
         RexUtil.createStructType(cluster.getTypeFactory(), nodeList,
-            fieldNameList, SqlValidatorUtil.F_SUGGESTER);
+            fieldNameList, Suggester.F_SUGGESTER);
     if (!force
         && RexUtil.isIdentity(nodeList, input.getRowType())) {
       if (input instanceof Project && fieldNames != null) {

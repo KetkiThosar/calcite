@@ -19,6 +19,7 @@ package org.apache.calcite.profile;
 import org.apache.calcite.linq4j.AbstractEnumerable;
 import org.apache.calcite.linq4j.Enumerable;
 import org.apache.calcite.linq4j.Enumerator;
+import org.apache.calcite.linq4j.tree.FunctionExpression;
 import org.apache.calcite.rel.metadata.NullSentinel;
 import org.apache.calcite.test.CalciteAssert;
 import org.apache.calcite.test.Matchers;
@@ -577,6 +578,12 @@ public class ProfilerTest {
             throw TestUtil.rethrow(e);
           }
         }
+
+		@Override
+		public Enumerable<List<Comparable>> where(FunctionExpression functionExpression) {
+			// TODO Auto-generated method stub
+			return null;
+		}
       };
     }
 

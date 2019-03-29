@@ -46,6 +46,7 @@ import org.apache.calcite.sql.SqlNode;
 import org.apache.calcite.sql.SqlSelect;
 import org.apache.calcite.sql.SqlUtil;
 import org.apache.calcite.sql.fun.SqlStdOperatorTable;
+import org.apache.calcite.sql.validate.NameUtils;
 import org.apache.calcite.sql.validate.SqlValidatorUtil;
 import org.apache.calcite.util.ImmutableBitSet;
 import org.apache.calcite.util.Litmus;
@@ -155,10 +156,10 @@ public class Lattice {
       populateAliases(join.getRight(), aliases, null);
     } else if (from.getKind() == SqlKind.AS) {
       populateAliases(SqlUtil.stripAs(from), aliases,
-          SqlValidatorUtil.getAlias(from, -1));
+    		  NameUtils.getAlias(from, -1));
     } else {
       if (current == null) {
-        current = SqlValidatorUtil.getAlias(from, -1);
+        current = NameUtils.getAlias(from, -1);
       }
       aliases.add(current);
     }
@@ -1065,11 +1066,11 @@ public class Lattice {
         if (node.alias == null) {
           node.alias = Util.last(node.table.t.getQualifiedName());
         }
-        node.alias = SqlValidatorUtil.uniquify(node.alias, aliases,
+        node.alias = NameUtils.uniquify(node.alias, aliases,
             SqlValidatorUtil.ATTEMPT_SUGGESTER);
         node.startCol = c;
         for (String name : node.table.t.getRowType().getFieldNames()) {
-          final String alias = SqlValidatorUtil.uniquify(name,
+          final String alias = NameUtils.uniquify(name,
               columnAliases, SqlValidatorUtil.ATTEMPT_SUGGESTER);
           final BaseColumn column =
               new BaseColumn(c++, node.alias, name, alias);

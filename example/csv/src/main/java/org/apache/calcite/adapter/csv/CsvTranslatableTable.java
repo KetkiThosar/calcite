@@ -23,6 +23,7 @@ import org.apache.calcite.linq4j.Enumerator;
 import org.apache.calcite.linq4j.QueryProvider;
 import org.apache.calcite.linq4j.Queryable;
 import org.apache.calcite.linq4j.tree.Expression;
+import org.apache.calcite.linq4j.tree.FunctionExpression;
 import org.apache.calcite.plan.RelOptTable;
 import org.apache.calcite.rel.RelNode;
 import org.apache.calcite.rel.type.RelProtoDataType;
@@ -59,6 +60,12 @@ public class CsvTranslatableTable extends CsvTable
       public Enumerator<Object> enumerator() {
         return new CsvEnumerator<>(source, cancelFlag, fieldTypes, fields);
       }
+
+	@Override
+	public Enumerable<Object> where(FunctionExpression functionExpression) {
+		// TODO Auto-generated method stub
+		return null;
+	}
     };
   }
 
