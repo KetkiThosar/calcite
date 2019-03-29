@@ -831,7 +831,7 @@ public class SqlValidatorImpl implements SqlValidatorWithHints {
 
       // If there's only one alias, add all child columns
       SelectScope selectScope =
-          SqlValidatorUtil.getEnclosingSelectScope(scope);
+    		  ScopeUtil.getEnclosingSelectScope(scope);
       if ((selectScope != null)
           && (selectScope.getChildren().size() == 1)) {
         RelDataType rowType =
@@ -3674,7 +3674,7 @@ public class SqlValidatorImpl implements SqlValidatorWithHints {
       case STREAM:
         SqlNodeList groupList = select.getGroup();
         if (groupList == null
-            || !SqlValidatorUtil.containsMonotonic(scope, groupList)) {
+            || !ScopeUtil.containsMonotonic(scope, groupList)) {
           if (fail) {
             throw newValidationError(aggregateNode,
                 Static.RESOURCE.streamMustGroupByMonotonic());

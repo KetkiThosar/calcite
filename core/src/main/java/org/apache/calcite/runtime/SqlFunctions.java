@@ -31,6 +31,7 @@ import org.apache.calcite.linq4j.function.Deterministic;
 import org.apache.calcite.linq4j.function.Experimental;
 import org.apache.calcite.linq4j.function.Function1;
 import org.apache.calcite.linq4j.function.NonDeterministic;
+import org.apache.calcite.linq4j.tree.FunctionExpression;
 import org.apache.calcite.linq4j.tree.Primitive;
 import org.apache.calcite.runtime.FlatLists.ComparableList;
 import org.apache.calcite.sql.SqlJsonConstructorNullClause;
@@ -2320,6 +2321,12 @@ public class SqlFunctions {
         return new ProductComparableListEnumerator<>(enumerators, fieldCount,
             withOrdinality);
       }
+
+	@Override
+	public Enumerable<ComparableList<E>> where(FunctionExpression functionExpression) {
+		// TODO Auto-generated method stub
+		return null;
+	}
     };
   }
 

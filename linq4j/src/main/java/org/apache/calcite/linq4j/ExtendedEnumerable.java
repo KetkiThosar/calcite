@@ -32,6 +32,7 @@ import org.apache.calcite.linq4j.function.NullableIntegerFunction1;
 import org.apache.calcite.linq4j.function.NullableLongFunction1;
 import org.apache.calcite.linq4j.function.Predicate1;
 import org.apache.calcite.linq4j.function.Predicate2;
+import org.apache.calcite.linq4j.tree.FunctionExpression;
 
 import java.math.BigDecimal;
 import java.util.Collection;
@@ -1090,7 +1091,7 @@ public interface ExtendedEnumerable<TSource> {
    * Filters a sequence of values based on a
    * predicate.
    */
-  Enumerable<TSource> where(Predicate1<TSource> predicate);
+  Enumerable<TSource> where(FunctionExpression functionExpression);
 
   /**
    * Filters a sequence of values based on a

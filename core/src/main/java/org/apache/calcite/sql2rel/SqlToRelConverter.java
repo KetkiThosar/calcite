@@ -151,6 +151,7 @@ import org.apache.calcite.sql.validate.DelegatingScope;
 import org.apache.calcite.sql.validate.ListScope;
 import org.apache.calcite.sql.validate.MatchRecognizeScope;
 import org.apache.calcite.sql.validate.ParameterScope;
+import org.apache.calcite.sql.validate.ScopeUtil;
 import org.apache.calcite.sql.validate.SelectScope;
 import org.apache.calcite.sql.validate.SqlMonotonicity;
 import org.apache.calcite.sql.validate.SqlNameMatcher;
@@ -2859,7 +2860,7 @@ public class SqlToRelConverter {
       // fields; system fields appear in the relnode's rowtype but do not
       // (yet) appear in the validator type.
       final SelectScope selectScope =
-          SqlValidatorUtil.getEnclosingSelectScope(bb.scope);
+          ScopeUtil.getEnclosingSelectScope(bb.scope);
       assert selectScope != null;
       final SqlValidatorNamespace selectNamespace =
           validator.getNamespace(selectScope.getNode());

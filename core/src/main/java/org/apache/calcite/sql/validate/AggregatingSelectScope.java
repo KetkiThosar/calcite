@@ -101,7 +101,7 @@ public class AggregatingSelectScope
       final SqlValidatorUtil.GroupAnalyzer groupAnalyzer =
           new SqlValidatorUtil.GroupAnalyzer(temporaryGroupExprList);
       for (SqlNode groupExpr : groupList) {
-        SqlValidatorUtil.analyzeGroupItem(this, groupAnalyzer, builder,
+        SqlGroupUtil.analyzeGroupItem(this, groupAnalyzer, builder,
             groupExpr);
       }
       extraExprs = groupAnalyzer.extraExprs;

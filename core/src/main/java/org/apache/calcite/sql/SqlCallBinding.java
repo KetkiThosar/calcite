@@ -21,6 +21,7 @@ import org.apache.calcite.runtime.CalciteException;
 import org.apache.calcite.runtime.Resources;
 import org.apache.calcite.sql.fun.SqlStdOperatorTable;
 import org.apache.calcite.sql.parser.SqlParserPos;
+import org.apache.calcite.sql.validate.ScopeUtil;
 import org.apache.calcite.sql.validate.SelectScope;
 import org.apache.calcite.sql.validate.SqlMonotonicity;
 import org.apache.calcite.sql.validate.SqlValidator;
@@ -75,7 +76,7 @@ public class SqlCallBinding extends SqlOperatorBinding {
 
   @Override public int getGroupCount() {
     final SelectScope selectScope =
-        SqlValidatorUtil.getEnclosingSelectScope(scope);
+    		ScopeUtil.getEnclosingSelectScope(scope);
     if (selectScope == null) {
       // Probably "VALUES expr". Treat same as "SELECT expr GROUP BY ()"
       return 0;

@@ -27,6 +27,7 @@ import org.apache.calcite.sql.type.SqlOperandTypeInference;
 import org.apache.calcite.sql.type.SqlReturnTypeInference;
 import org.apache.calcite.sql.validate.AggregatingSelectScope;
 import org.apache.calcite.sql.validate.OrderByScope;
+import org.apache.calcite.sql.validate.ScopeUtil;
 import org.apache.calcite.sql.validate.SelectScope;
 import org.apache.calcite.sql.validate.SqlValidator;
 import org.apache.calcite.sql.validate.SqlValidatorScope;
@@ -63,7 +64,7 @@ public class SqlAbstractGroupFunction extends SqlAggFunction {
       SqlValidatorScope scope, SqlValidatorScope operandScope) {
     super.validateCall(call, validator, scope, operandScope);
     final SelectScope selectScope =
-        SqlValidatorUtil.getEnclosingSelectScope(scope);
+    		ScopeUtil.getEnclosingSelectScope(scope);
     assert selectScope != null;
     final SqlSelect select = selectScope.getNode();
     if (!validator.isAggregate(select)) {
@@ -71,7 +72,7 @@ public class SqlAbstractGroupFunction extends SqlAggFunction {
           Static.RESOURCE.groupingInAggregate(getName()));
     }
     final AggregatingSelectScope aggregatingSelectScope =
-        SqlValidatorUtil.getEnclosingAggregateSelectScope(scope);
+        ScopeUtil.getEnclosingAggregateSelectScope(scope);
     if (aggregatingSelectScope == null) {
       // We're probably in the GROUP BY clause
       throw validator.newValidationError(call,

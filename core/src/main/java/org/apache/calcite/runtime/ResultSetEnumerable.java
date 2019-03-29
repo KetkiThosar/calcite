@@ -24,6 +24,7 @@ import org.apache.calcite.linq4j.Enumerator;
 import org.apache.calcite.linq4j.Linq4j;
 import org.apache.calcite.linq4j.function.Function0;
 import org.apache.calcite.linq4j.function.Function1;
+import org.apache.calcite.linq4j.tree.FunctionExpression;
 import org.apache.calcite.linq4j.tree.Primitive;
 import org.apache.calcite.util.Static;
 
@@ -445,6 +446,12 @@ public class ResultSetEnumerable<T> extends AbstractEnumerable<T> {
   public interface PreparedStatementEnricher {
     void enrich(PreparedStatement statement) throws SQLException;
   }
+
+@Override
+public Enumerable<T> where(FunctionExpression functionExpression) {
+	// TODO Auto-generated method stub
+	return null;
+}
 }
 
 // End ResultSetEnumerable.java

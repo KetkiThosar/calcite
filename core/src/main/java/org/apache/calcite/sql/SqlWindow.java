@@ -24,6 +24,7 @@ import org.apache.calcite.sql.type.ReturnTypes;
 import org.apache.calcite.sql.type.SqlTypeFamily;
 import org.apache.calcite.sql.util.SqlBasicVisitor;
 import org.apache.calcite.sql.util.SqlVisitor;
+import org.apache.calcite.sql.validate.ScopeUtil;
 import org.apache.calcite.sql.validate.SqlValidator;
 import org.apache.calcite.sql.validate.SqlValidatorScope;
 import org.apache.calcite.sql.validate.SqlValidatorUtil;
@@ -568,7 +569,7 @@ public class SqlWindow extends SqlCall {
 
     // 6.10 rule 6a Function RANK & DENSE_RANK require ORDER BY clause
     if (orderList.size() == 0
-        && !SqlValidatorUtil.containsMonotonic(scope)
+        && !ScopeUtil.containsMonotonic(scope)
         && windowCall != null
         && windowCall.getOperator().requiresOrder()) {
       throw validator.newValidationError(this, RESOURCE.funcNeedsOrderBy());
@@ -600,7 +601,7 @@ public class SqlWindow extends SqlCall {
         // requires an ORDER BY clause if frame is logical(RANGE)
         // We relax this requirement if the table appears to be
         // sorted already
-        if (!isRows() && !SqlValidatorUtil.containsMonotonic(scope)) {
+        if (!isRows() && !ScopeUtil.containsMonotonic(scope)) {
           throw validator.newValidationError(this,
               RESOURCE.overMissingOrderBy());
         }
@@ -623,7 +624,7 @@ public class SqlWindow extends SqlCall {
       // Validate across boundaries. 7.10 Rule 8 a-d
       checkSpecialLiterals(this, validator);
     } else if (orderList.size() == 0
-        && !SqlValidatorUtil.containsMonotonic(scope)
+        && !ScopeUtil.containsMonotonic(scope)
         && windowCall != null
         && windowCall.getOperator().requiresOrder()) {
       throw validator.newValidationError(this, RESOURCE.overMissingOrderBy());

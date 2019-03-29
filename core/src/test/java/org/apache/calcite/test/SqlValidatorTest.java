@@ -40,6 +40,7 @@ import org.apache.calcite.sql.validate.SqlAbstractConformance;
 import org.apache.calcite.sql.validate.SqlConformance;
 import org.apache.calcite.sql.validate.SqlConformanceEnum;
 import org.apache.calcite.sql.validate.SqlDelegatingConformance;
+import org.apache.calcite.sql.validate.SqlGroupUtil;
 import org.apache.calcite.sql.validate.SqlMonotonicity;
 import org.apache.calcite.sql.validate.SqlValidator;
 import org.apache.calcite.sql.validate.SqlValidatorUtil;
@@ -5175,7 +5176,7 @@ public class SqlValidatorTest extends SqlValidatorTestCase {
   }
 
   private ImmutableList<ImmutableBitSet> rollup(ImmutableBitSet... sets) {
-    return SqlValidatorUtil.rollup(ImmutableList.copyOf(sets));
+    return SqlGroupUtil.rollup(ImmutableList.copyOf(sets));
   }
 
   /** Unit test for
@@ -5210,7 +5211,7 @@ public class SqlValidatorTest extends SqlValidatorTestCase {
   }
 
   private ImmutableList<ImmutableBitSet> cube(ImmutableBitSet... sets) {
-    return SqlValidatorUtil.cube(ImmutableList.copyOf(sets));
+    return SqlGroupUtil.cube(ImmutableList.copyOf(sets));
   }
 
   @Test public void testGrouping() {
