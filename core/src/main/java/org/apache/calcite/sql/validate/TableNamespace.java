@@ -137,7 +137,7 @@ class TableNamespace extends AbstractNamespace {
     final List<RelDataTypeField> baseFields =
         getBaseRowType().getFieldList();
     final Map<String, Integer> nameToIndex =
-        XYZ.mapNameToIndex(baseFields);
+        SqlTableUtil.mapNameToIndex(baseFields);
 
     for (final RelDataTypeField extendedField : extendedFields) {
       final String extFieldName = extendedField.getName();

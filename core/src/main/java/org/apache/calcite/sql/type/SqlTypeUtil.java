@@ -32,7 +32,7 @@ import org.apache.calcite.sql.SqlNode;
 import org.apache.calcite.sql.parser.SqlParserPos;
 import org.apache.calcite.sql.validate.SqlValidator;
 import org.apache.calcite.sql.validate.SqlValidatorScope;
-import org.apache.calcite.sql.validate.XYZ;
+import org.apache.calcite.sql.validate.SqlTableUtil;
 import org.apache.calcite.util.NumberUtil;
 import org.apache.calcite.util.Pair;
 import org.apache.calcite.util.Util;
@@ -1099,7 +1099,7 @@ public abstract class SqlTypeUtil {
             type,
             charset,
             collation);
-    XYZ.checkCharsetAndCollateConsistentIfCharType(type);
+    SqlTableUtil.checkCharsetAndCollateConsistentIfCharType(type);
     return type;
   }
 

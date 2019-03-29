@@ -3179,7 +3179,7 @@ public class SqlValidatorImpl implements SqlValidatorWithHints {
       final RelDataType rightRowType = getNamespace(right).getRowType();
       final SqlNameMatcher nameMatcher = catalogReader.nameMatcher();
       List<String> naturalColumnNames =
-          XYZ.deriveNaturalJoinColumnList(nameMatcher,
+          ColumnUtils.deriveNaturalJoinColumnList(nameMatcher,
               leftRowType, rightRowType);
 
       // Check compatibility of the chosen columns.
@@ -4227,7 +4227,7 @@ public class SqlValidatorImpl implements SqlValidatorWithHints {
     for (SqlNode node : targetColumnList) {
       SqlIdentifier id = (SqlIdentifier) node;
       RelDataTypeField targetField =
-          XYZ.getTargetField(
+          SqlTableUtil.getTargetField(
               baseRowType, typeFactory, id, catalogReader, relOptTable);
       if (targetField == null) {
         throw newValidationError(id,
@@ -4312,7 +4312,7 @@ public class SqlValidatorImpl implements SqlValidatorWithHints {
       // Get the mapping from column indexes of the underlying table
       // to the target columns and view constraints.
       final Map<Integer, RelDataTypeField> tableIndexToTargetField =
-          XYZ.getIndexToFieldMap(tableFields, targetRowType);
+          SqlTableUtil.getIndexToFieldMap(tableFields, targetRowType);
       final Map<Integer, RexNode> projectMap =
           RelOptUtil.getColumnConstraints(modifiableViewTable, targetRowType, typeFactory);
 
@@ -4366,7 +4366,7 @@ public class SqlValidatorImpl implements SqlValidatorWithHints {
           RelOptUtil.getColumnConstraints(modifiableViewTable, targetRowType,
               typeFactory);
       final Map<String, Integer> nameToIndex =
-          XYZ.mapNameToIndex(tableRowType.getFieldList());
+          SqlTableUtil.mapNameToIndex(tableRowType.getFieldList());
 
       // Validate update values against the view constraint.
       final List<SqlNode> targets = update.getTargetColumnList().getList();
@@ -6355,7 +6355,7 @@ public class SqlValidatorImpl implements SqlValidatorWithHints {
         if (join.isNatural()) {
           final RelDataType t0 = getValidatedNodeType(join.getLeft());
           final RelDataType t1 = getValidatedNodeType(join.getRight());
-          return XYZ.deriveNaturalJoinColumnList(
+          return ColumnUtils.deriveNaturalJoinColumnList(
               catalogReader.nameMatcher(), t0, t1);
         }
       }

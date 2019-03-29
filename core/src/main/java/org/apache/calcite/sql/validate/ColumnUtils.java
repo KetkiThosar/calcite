@@ -2,8 +2,10 @@ package org.apache.calcite.sql.validate;
 
 import static org.apache.calcite.util.Static.RESOURCE;
 
+import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.calcite.rel.type.RelDataType;
 import org.apache.calcite.rel.type.RelDataTypeFactory;
 import org.apache.calcite.rel.type.RelDataTypeField;
 import org.apache.calcite.rel.type.RelDataTypeFieldImpl;
@@ -65,4 +67,31 @@ public class ColumnUtils {
 	          RESOURCE.duplicateNameInColumnList(Util.last(names.get(i))));
 	    }
 	  }
+	  
+	  /**
+		 * Derives the list of column names suitable for NATURAL JOIN. These are the
+		 * columns that occur exactly once on each side of the join.
+		 *
+		 * @param nameMatcher
+		 *            Whether matches are case-sensitive
+		 * @param leftRowType
+		 *            Row type of left input to the join
+		 * @param rightRowType
+		 *            Row type of right input to the join
+		 * @return List of columns that occur once on each side
+		 */
+		public static List<String> deriveNaturalJoinColumnList(SqlNameMatcher nameMatcher, RelDataType leftRowType,
+				RelDataType rightRowType) {
+			final List<String> naturalColumnNames = new ArrayList<>();
+			final List<String> leftNames = leftRowType.getFieldNames();
+			final List<String> rightNames = rightRowType.getFieldNames();
+			for (String name : leftNames) {
+				if (nameMatcher.frequency(leftNames, name) == 1 && nameMatcher.frequency(rightNames, name) == 1) {
+					naturalColumnNames.add(name);
+				}
+			}
+			return naturalColumnNames;
+		}
+	  
+	  
 }
